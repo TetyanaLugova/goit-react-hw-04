@@ -5,6 +5,7 @@ import ImegeGallery from './components/ImageGallery/ImageGallery';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import Loader from './components/Loader/Loader';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
 
 function App() {
   const [imeges, setImeges] = useState([]);
@@ -12,6 +13,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     if (searchQuery.trim() === '') {
@@ -43,14 +46,33 @@ function App() {
     setPage(page + 1);
   };
 
+  function openModal(image) {
+    setSelectedImage(image);
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setSelectedImage(null);
+    setIsOpen(false);
+  }
+
   return (
     <>
       <SearchBar onSubmit={handleSubmit} />
       {isError && <ErrorMessage />}
-      {imeges.length > 0 && <ImegeGallery items={imeges} />}
+      {imeges.length > 0 && (
+        <ImegeGallery items={imeges} openModal={openModal} />
+      )}
       {isLoading && <Loader />}
       {imeges.length > 0 && !isLoading && (
         <LoadMoreBtn handleLoadMore={handleLoadMore} />
+      )}
+      {selectedImage && (
+        <ImageModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          image={selectedImage}
+        />
       )}
     </>
   );
