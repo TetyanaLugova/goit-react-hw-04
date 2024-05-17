@@ -1,15 +1,15 @@
-import { InfinitySpin } from "react-loader-spinner";
+import { InfinitySpin } from 'react-loader-spinner';
+import css from './Loader.module.css';
 
 export default function Loader() {
   return (
-    <>
+    <div className={css.loader}>
       <InfinitySpin
         visible={true}
         width="200"
-        color="#4fa94d"
+        color="#5b39f3"
         ariaLabel="infinity-spin-loading"
       />
-      <p>Please wait...</p>
-    </>
+    </div>
   );
 }

@@ -1,9 +1,11 @@
 import ImageCard from '../ImageCard/ImageCard';
+import css from './ImageGallery.module.css';
+
 export default function ImegeGallery({ items, openModal }) {
   return (
-    <ul>
+    <ul className={css.list}>
       {items.map(item => (
-        <li key={item.id}>
+        <li className={css.item} key={item.id}>
           <ImageCard onClick={() => openModal(item)} item={item} />
         </li>
       ))}
